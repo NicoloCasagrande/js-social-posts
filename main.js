@@ -57,6 +57,7 @@ const posts = [
 ];
 
 const postContainer = document.getElementById('container');
+let clickedPost = [];
 
 for (let i = 0; i < posts.length; i++) {
     const postCard = document.createElement('div');
@@ -112,6 +113,18 @@ for (let i = 0; i < posts.length; i++) {
         Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
     `;
     postLikes.append(likeNum);
+
+    postLikes.addEventListener("click", function(){
+        likeBtn.style.color = 'green';
+        clickedPost.push(posts[i].id);
+        console.log(clickedPost);
+        posts[i].likes += 1;
+        likeNum.innerHTML = `
+        Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+        `;
+        postLikes.append(likeNum);
+    });
 }
 
 const likes = [];
+
