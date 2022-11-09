@@ -115,7 +115,7 @@ for (let i = 0; i < posts.length; i++) {
     postLikes.append(likeNum);
 
     postLikes.addEventListener("click", function(){
-        likeBtn.style.color = 'green';
+        likeBtn.classList.add('like-button--liked');
         clickedPost.push(posts[i].id);
         console.log(clickedPost);
         posts[i].likes += 1;
@@ -125,7 +125,7 @@ for (let i = 0; i < posts.length; i++) {
         postLikes.append(likeNum);
         const data = posts[i].created.split("");
         const newDate = data[8] + "" + data[9] + "" + data[7] + "" + data[5] + "" + data[6] + "" + data[4] + "" + data[0] + "" + data[1] + "" + data[2] + "" + data[3];
-        console.log(data);
+
         posts[i].created = newDate;
         console.log(posts[i].created);
     });
