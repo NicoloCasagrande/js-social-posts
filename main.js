@@ -76,8 +76,8 @@ for (let i = 0; i < posts.length; i++) {
     const postMetaData = document.createElement('div');
     postMetaData.classList.add('post-meta__data');
     postMetaData.innerHTML = `
-        <div class="post-meta__author">Phil Mangione</div>
-        <div class="post-meta__time">4 mesi fa</div>
+        <div class="post-meta__author">${posts[i].author.name}</div>
+        <div class="post-meta__time">${posts[i].created}</div>
         `;
     postMeta.append(postMetaData);
     const postText = document.createElement('div');
@@ -114,20 +114,37 @@ for (let i = 0; i < posts.length; i++) {
     `;
     postLikes.append(likeNum);
 
+    let clicked = false
+    const data = posts[i].created.split("");
+    const newDate = data[8] + "" + data[9] + "" + data[7] + "" + data[5] + "" + data[6] + "" + data[4] + "" + data[0] + "" + data[1] + "" + data[2] + "" + data[3];
+    posts[i].created = newDate;
     postLikes.addEventListener("click", function(){
-        likeBtn.classList.add('like-button--liked');
-        clickedPost.push(posts[i].id);
-        console.log(clickedPost);
-        posts[i].likes += 1;
-        likeNum.innerHTML = `
-        Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
-        `;
-        postLikes.append(likeNum);
-        const data = posts[i].created.split("");
-        const newDate = data[8] + "" + data[9] + "" + data[7] + "" + data[5] + "" + data[6] + "" + data[4] + "" + data[0] + "" + data[1] + "" + data[2] + "" + data[3];
-
-        posts[i].created = newDate;
-        console.log(posts[i].created);
+        if(clicked === false){
+            likeBtn.classList.add('like-button--liked');
+            clickedPost.push(posts[i].id);
+            console.log(clickedPost);
+            posts[i].likes += 1;
+            likeNum.innerHTML = `
+            Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+            `;
+            postLikes.append(likeNum);
+            console.log(posts[i].created);
+            clicked = true;
+        }else{
+            likeBtn.classList.remove('like-button--liked');
+            posts[i].likes -= 1;
+            likeNum.innerHTML = `
+            Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+            `;
+            postLikes.append(likeNum);
+            // clickedPost.splice(posts[i].id);
+            if(clickedPost.includes(posts[i].id)){
+                const index = clickedPost.indexOf(posts[i].id);
+                console.log(index);
+                clickedPost.splice(index, 1);
+            }
+            clicked = false;
+        }
     });
 }
 
