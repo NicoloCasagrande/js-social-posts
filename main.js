@@ -55,6 +55,14 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+function getInitials(postAutor) {
+    var names = postAutor.split(''),
+    initials = names[0]. substring(0, 1). toUpperCase();
+    if (names.length > 1) {
+    initials += names[names.length-1].substring(0, 1). toUpperCase();
+    }
+    return initials;
+}
 
 const postContainer = document.getElementById('container');
 let clickedPost = [];
@@ -71,7 +79,14 @@ for (let i = 0; i < posts.length; i++) {
     postHeader.append(postMeta);
     const postIcon = document.createElement('div');
     postIcon.classList.add('post-meta__icon');
-    postIcon.innerHTML = `<img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">`
+    if(posts[i].author.image === null){
+        const postAutor = posts[i].author.name;
+        var initials = getInitials(postAutor);
+        console.log(initials);
+        postIcon.innerHTML = `<h4>${initials}</h4>`;
+    }else{
+        postIcon.innerHTML = `<img class="profile-pic" src="${posts[i].author.image}" alt="${posts[i].author.name}">`;
+    } 
     postMeta.append(postIcon);
     const postMetaData = document.createElement('div');
     postMetaData.classList.add('post-meta__data');
@@ -130,7 +145,6 @@ for (let i = 0; i < posts.length; i++) {
         }else{
             likeBtn.classList.remove('like-button--liked');
             posts[i].likes -= 1;
-
             if(clickedPost.includes(posts[i].id)){
                 const index = clickedPost.indexOf(posts[i].id);
                 console.log(index);
